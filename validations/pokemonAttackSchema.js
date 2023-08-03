@@ -7,26 +7,31 @@ export const pokemonAttackParamsSchema = Joi.object ({
 })
 
 export const pokemonAttackSchema = Joi.object({
-pokemonId: pattern(/^[0-9]+$/, 'numbers')
+pokemonId:  Joi.string ()
+.pattern(/^[0-9]+$/, 'numbers')
 .required()
 .min (0),
 
 
-attack1Id: pattern(/^[0-9]+$/, 'numbers')
+attack1Id: Joi.string ()
+.pattern(/^[0-9]+$/, 'numbers')
 .required()
 .min (0),
 
-attack2Id :pattern(/^[0-9]+$/, 'numbers')
+attack2Id :  Joi.string ()
+.pattern(/^[0-9]+$/, 'numbers')
 .required()
 .min (0),
 
-attack3Id: pattern(/^[0-9]+$/, 'numbers')
+attack3Id: Joi.string ()
+.pattern(/^[0-9]+$/, 'numbers')
 .required()
 .min (0),
 
 
-attack4Id: pattern(/^[0-9]+$/, 'numbers')
+attack4Id: Joi.string ()
+.pattern(/^[0-9]+$/, 'numbers')
 .required()
-.min (0),
+.min (0)
 
 })

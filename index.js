@@ -4,12 +4,17 @@ import {pokemonRoutes} from './routes/pokemonRouter.js'
 import {attackRoutes} from './routes/attackRouter.js'
 import { pokemonAttackRoutes } from './routes/pokemonAttackRouter.js'
 import { pokemonTrainerRoutes } from './routes/pokemonTrainerRouter.js'
-
+import { authRoutes } from './routes/authRouter.js'
+import cors from 'cors'
+import {expressjwt as jwt } from 'express-jwt'
 import dotenv from 'dotenv'
+
 dotenv.config ()
 
 const PORT = process.env.PORT || 3000
+
 const app = express()
+
 app.use(express.urlencoded({extended:true}))
 app.use (express.json())
 
