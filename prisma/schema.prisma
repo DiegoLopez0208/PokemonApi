@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model PokemonTrainer {
+  id Int @id @default(autoincrement())
+  username String
+  password String
+  email String  @unique
+  birth_year DateTime
+  createdAt DateTime @map ("created_at") @updatedAt
+  updateAt DateTime @map ("update_at") @updatedAt
+  deletedAt DateTime? @map ("deleted_at")
+
+  pokemonAttackId Int @map ("pokemon_attack_id")
+  pokemonAttack PokemonAttack @relation(fields: [pokemonAttackId], references: [id])
+
+  @@map ("pokemon_trainer")
+}
+
+model PokemonAttack {
+  id Int @id @default(autoincrement())
+  pokemonId Int @map ("pokemon_id")
+  attack1Id Int @map ("attack1_id")
+  attack2Id Int @map ("attack2_id")
+  attack3Id Int @map ("attack3_id")
+  attack4Id Int @map ("attack4_id")
+  pokemon Pokemon @relation(fields: [pokemonId], references: [id])
+  attack1 Attack @relation("Attack1", fields: [attack1Id], references: [id])
+  attack2 Attack @relation("Attack2", fields: [attack2Id], references: [id])
+  attack3 Attack @relation("Attack3", fields: [attack3Id], references: [id])
+  attack4 Attack @relation("Attack4", fields: [attack4Id], references: [id])
+
+  
+  pokemonTrainer PokemonTrainer[]
+
+  createdAt DateTime @map ("created_at") @updatedAt
+  updateAt DateTime @map ("update_at") @updatedAt
+  deletedAt DateTime? @map ("deleted_at")
+
+  @@map ("pokemon_attack")
+}
+
+model Attack {
+  id Int @id @default(autoincrement())
+  attackName String  @unique @map ("attack_name")
+  attackDmg Int? @map ("attack_dmg")
+  attackAcurracity Int @map ("attack_acurracity")
+  attackType String @map ("attack_type")
+  attackPriority Int @map ("attack_priority")
+
+  pokemonAttack1 PokemonAttack[] @relation("Attack1")
+  pokemonAttack2 PokemonAttack[] @relation("Attack2")
+  pokemonAttack3 PokemonAttack[] @relation("Attack3")
+  pokemonAttack4 PokemonAttack[] @relation("Attack4")
+
+  createdAt DateTime @map ("created_at")  @updatedAt
+  updateAt DateTime @map ("update_at")  @updatedAt
+  deletedAt DateTime? @map ("deleted_at")  
+
+  @@map ("attack")
+}
+
+model Pokemon {
+  id Int @id @default(autoincrement())
+  pokemonName String @unique @map ("pokemon_name")
+  hp Int
+  type1 String
+  type2 String?
+  velocity Int 
+  defense Int 
+  specialAttack Int @map ("special_attack")
+  specialDefense Int @map ("special_defense")
+  attack Int
+
+  attacks PokemonAttack[]
+
+  createdAt DateTime @map ("created_at") @updatedAt
+  updateAt DateTime @map ("update_at") @updatedAt
+  deletedAt DateTime? @map ("deleted_at")
+
+  @@map ("pokemon")
+}
